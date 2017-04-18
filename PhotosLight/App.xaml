@@ -2,19 +2,15 @@
     x:Class="PhotosLight.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PhotosLight"
+    xmlns:local="using:PhotosLight"    
     xmlns:controls="using:PhotosLight.Controls"
     xmlns:converter="using:PhotosLight.Converters"
     RequestedTheme="Dark">
 
     <Application.Resources>
-       
-
         <ResourceDictionary>
-          
             <ResourceDictionary.ThemeDictionaries>
-                
-            <ResourceDictionary x:Key="Dark">
+                <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="ViewerFlyoutMenuRedBrush" Color="#E74856"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuBlueBrush" Color="#0099BC"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuPurpleBrush" Color="#6B69D6"/>
@@ -30,34 +26,39 @@
                     <SolidColorBrush x:Key="ViewerFlyoutMenuOrangeBrush" Color="#EF6950"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuGreyBlueBrush" Color="#69797E"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuGreyGreenBrush" Color="#567C73"/>
+                    <SolidColorBrush x:Key="SubtitleBrush" Color="{StaticResource SystemBaseMediumColor}"/>
                 </ResourceDictionary>
-
             </ResourceDictionary.ThemeDictionaries>
+            
             <converter:StringNullOrEmptyVisibillityConverter x:Key="StringNullOrEmptyVisibillityConverter" />
+            
             <DataTemplate x:Key="ImageFilmStripItemDataTemplate">
                 <Grid>
                     <Image  Height="65" Width="68"  Stretch="UniformToFill" Source="ms-appx:///Assets/filmstrip.png"/>
                     <Image  Height="46" Width="62" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding Source}" />
                 </Grid>
             </DataTemplate>
-            <DataTemplate x:Key="ImageItemDataTemplate">
+            
+            <DataTemplate x:Key="ImageItemDataTemplate" >
                 <Grid>
                     <Image  Source="{Binding Source}" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
+            
             <DataTemplate x:Key="VideoItemDataTemplate">
                 <Grid>
                     <MediaElement AreTransportControlsEnabled="True"  Source="{Binding Source}" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
+
             <local:ViewerItemDataTemplateSelector x:Name="ViewerItemDataTemplateSelector" 
-        ImageItemTemplate="{StaticResource ImageItemDataTemplate}"
-        VideoItemTemplate="{StaticResource VideoItemDataTemplate}"
-        />
+            ImageItemTemplate="{StaticResource ImageItemDataTemplate}"
+            VideoItemTemplate="{StaticResource VideoItemDataTemplate}" />
 
             <ItemsPanelTemplate x:Key="ItemsPanelTemplate">
                 <ItemsStackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
+            
             <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
