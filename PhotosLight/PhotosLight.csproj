@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MenuFlyoutItemEx.cs" />
+    <Compile Include="Converters\StringNullOrEmptyVisibillityConverter.cs" />
     <Compile Include="DataModel\ImageViewerItem.cs" />
     <Compile Include="DataModel\VideoViewerItem.cs" />
     <Compile Include="DataModel\ViewerItemBase.cs" />
