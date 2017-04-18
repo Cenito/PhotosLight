@@ -12,6 +12,8 @@ namespace PhotosLight.DataModel
         private static Uri _baseUri = new Uri("ms-appx:///");
         public string Title { get; set; }
         public Uri Source { get; set; }
+        public virtual bool IsRotateSupported { get { return true; } }
+        public virtual bool IsZoomSupported { get { return true; } }
         public ViewerItemBase(string title, string sourceName)
         {
             Title = title;

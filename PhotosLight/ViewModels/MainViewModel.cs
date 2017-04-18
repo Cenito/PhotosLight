@@ -20,6 +20,9 @@ namespace PhotosLight.ViewModels
         private object _selectedObject;
         private bool _isChromeOn;
         public DelegateCommand ShareCommnad { get; private set; }
+        public DelegateCommand ZoomCommnad { get; private set; }
+        public DelegateCommand RotateCommnad { get; private set; }
+        public DelegateCommand DeleteCommnad { get; private set; }
         public DelegateCommand FullscreenCommnad { get; private set; }
         public DelegateCommand LoadContentCommnad { get; private set; }
         public ObservableCollection<IViewerItem> Thumbnails { get { return _thumbnailService.Thumbnails; } }

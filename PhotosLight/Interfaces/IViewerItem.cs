@@ -10,5 +10,7 @@ namespace PhotosLight.Interfaces
     {
         string Title { get; set; }
         Uri Source { get; set; }
+        bool IsRotateSupported { get; }
+        bool IsZoomSupported { get; }
     }
 }
