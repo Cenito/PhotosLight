@@ -10,8 +10,8 @@
     <Page.Resources>
        
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Tapped="{x:Bind ViewModel.OnViewTapped}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ChromeStateGroup">             
                  <VisualState x:Name="ChromeOn">
@@ -62,14 +62,14 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <FlipView x:Name="FlipView" Tapped="{x:Bind ViewModel.OnViewTapped}"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
+        <FlipView x:Name="FlipView"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
            
         </FlipView>
         <Button x:Name="FullScreenButton"  HorizontalAlignment="Right"  Command="{x:Bind ViewModel.FullscreenCommnad}" VerticalAlignment="Bottom" Grid.Row="1">
             <FontIcon x:Name="FullScreenFontIcon" Foreground="White" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE1D9;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
         </Button>
         <ListView x:Name="listView"  HorizontalAlignment="Center"  ScrollViewer.HorizontalScrollMode="Enabled"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.IsHorizontalRailEnabled="True" ItemTemplate="{StaticResource ImageFilmStripItemDataTemplate}"  SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" ItemsSource="{x:Bind ViewModel.Thumbnails}"  Grid.Row="1" VerticalAlignment="Bottom" ItemsPanel="{StaticResource ItemsPanelTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle1}" Margin="50,0"  />
-        <CommandBar x:Name="commandBar" VerticalContentAlignment="Center" VerticalAlignment="Top" Background="#E51F1F1F">
+        <controls:CollapsibleToolBar x:Name="commandBar" Style="{StaticResource CollapsibleToolBarStyle}" VerticalContentAlignment="Center" VerticalAlignment="Top" Background="#E51F1F1F">
             
             <CommandBar.Content>
                 <Grid VerticalAlignment="Center">
@@ -85,17 +85,21 @@
                     </TextBlock>
                 </Grid>
             </CommandBar.Content>
-            <AppBarButton Icon="Zoom" Label="Zoom" Command="{x:Bind ViewModel.ZoomCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsZoomSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <controls:CollapsibleToolBar.MiddleContent>
+                <StackPanel Orientation="Horizontal">
+            <AppBarButton Icon="Zoom" Label="" Command="{x:Bind ViewModel.ZoomCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsZoomSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                 <AppBarButton.Flyout>
                     <Flyout>
                         <Slider StepFrequency="0.1" Minimum="1" Maximum="5" Value="{x:Bind ViewModel.ZoomFactor, Mode=TwoWay}" MinWidth="150"></Slider>
-                    </Flyout>
-                   
+                    </Flyout>                   
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Delete" Label="Delete" Command="{x:Bind ViewModel.DeleteCommnad}"/>
-            <AppBarButton Icon="Rotate" Label="Rotate" Command="{x:Bind ViewModel.RotateCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsRotateSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <AppBarButton Icon="Edit" Label="Create">
+                <AppBarButton Icon="Delete" Label="" Command="{x:Bind ViewModel.DeleteCommnad}"/>
+                <AppBarButton Icon="Rotate" Label="" Command="{x:Bind ViewModel.RotateCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsRotateSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+             </StackPanel>
+            </controls:CollapsibleToolBar.MiddleContent>
+
+            <AppBarButton Icon="Edit" Label="Edit Create" >
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <controls:MenuFlyoutItemEx Text="Draw Inc" IconBackground="{StaticResource ViewerFlyoutMenuRedBrush}" Tag="&#xE104;" Style="{StaticResource MenuFlyoutItemStyle}"/>
@@ -104,9 +108,9 @@
                     </MenuFlyout>
                 </AppBarButton.Flyout>
                 
-            </AppBarButton>           
-            <AppBarButton Icon="Folder" Label="Folder" Command="{x:Bind ViewModel.LoadContentCommnad}"/>
+            </AppBarButton>
             <AppBarButton Icon="ReShare" Command="{x:Bind ViewModel.ShareCommnad}"  Label="Share"/>
-        </CommandBar>
+            <AppBarButton Icon="Folder" Label="Folder" Command="{x:Bind ViewModel.LoadContentCommnad}"/>
+        </controls:CollapsibleToolBar>
     </Grid>
 </Page>

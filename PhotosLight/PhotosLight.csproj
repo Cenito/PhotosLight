@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="AttachedProperties\ScrollViewerAttachedProperties.cs" />
     <Compile Include="Controls\BindableFlyout.cs" />
+    <Compile Include="Controls\CollapsibleToolBar.cs" />
     <Compile Include="Controls\MenuFlyoutItemEx.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertBoolConverter.cs" />
