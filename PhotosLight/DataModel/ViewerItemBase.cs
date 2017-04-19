@@ -12,6 +12,7 @@ namespace PhotosLight.DataModel
     {
         private static Uri _baseUri = new Uri("ms-appx:///");
         private double _zoomFactor;
+        private double _angle;
         public string Title { get; set; }
         public Uri Source { get; set; }
         public virtual bool IsRotateSupported { get { return true; } }
@@ -26,6 +27,13 @@ namespace PhotosLight.DataModel
             get { return _zoomFactor; }
             set { SetProperty(ref _zoomFactor, value); }
         }
+        public double Angle
+        {
+            get { return _angle; }
+            set { SetProperty(ref _angle, value); }
+        }
+
+        
 
     }
 }

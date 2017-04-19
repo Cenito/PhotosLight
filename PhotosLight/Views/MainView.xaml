@@ -2,8 +2,7 @@
     x:Class="PhotosLight.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PhotosLight"
-     xmlns:converter="using:PhotosLight.Converters"
+   xmlns:local="using:PhotosLight"
     xmlns:controls="using:PhotosLight.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -63,23 +62,33 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <FlipView Tapped="{x:Bind ViewModel.OnViewTapped}"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
-
+        <FlipView x:Name="FlipView" Tapped="{x:Bind ViewModel.OnViewTapped}"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
+           
         </FlipView>
         <Button x:Name="FullScreenButton"  HorizontalAlignment="Right"  Command="{x:Bind ViewModel.FullscreenCommnad}" VerticalAlignment="Bottom" Grid.Row="1">
             <FontIcon x:Name="FullScreenFontIcon" Foreground="White" FontSize="20" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE1D9;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
         </Button>
         <ListView x:Name="listView"  HorizontalAlignment="Center"  ScrollViewer.HorizontalScrollMode="Enabled"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.IsHorizontalRailEnabled="True" ItemTemplate="{StaticResource ImageFilmStripItemDataTemplate}"  SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" ItemsSource="{x:Bind ViewModel.Thumbnails}"  Grid.Row="1" VerticalAlignment="Bottom" ItemsPanel="{StaticResource ItemsPanelTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle1}" Margin="50,0"  />
         <CommandBar x:Name="commandBar" VerticalContentAlignment="Center" VerticalAlignment="Top" Background="#E51F1F1F">
+            
             <CommandBar.Content>
                 <Grid VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind ViewModel.SelectedItem.Title, Mode=OneWay}" Margin="8,0,0,10" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="TitleTextBlock" Text="{x:Bind ViewModel.SelectedItem.Title, Mode=OneWay}" Margin="8,0,0,10" VerticalAlignment="Center">
+                        <TextBlock.ContextFlyout >
+                    <controls:BindableFlyout IsOpen="{x:Bind ViewModel.IsFileInfoOpen, Mode=TwoWay}"
+                       Parent="{Binding ElementName=TitleTextBlock}">
+                        <StackPanel>
+                            <TextBlock Text="FileInfo Flyout!" Margin="10" />                           
+                        </StackPanel>
+                    </controls:BindableFlyout>
+                </TextBlock.ContextFlyout>
+                    </TextBlock>
                 </Grid>
             </CommandBar.Content>
             <AppBarButton Icon="Zoom" Label="Zoom" Command="{x:Bind ViewModel.ZoomCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsZoomSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                 <AppBarButton.Flyout>
                     <Flyout>
-                        <Slider StepFrequency="0.1" Minimum="1" Maximum="5" Value="{x:Bind ViewModel.SelectedItem.ZoomFactor, Mode=TwoWay}" MinWidth="150"></Slider>
+                        <Slider StepFrequency="0.1" Minimum="1" Maximum="5" Value="{x:Bind ViewModel.ZoomFactor, Mode=TwoWay}" MinWidth="150"></Slider>
                     </Flyout>
                    
                 </AppBarButton.Flyout>
@@ -91,7 +100,7 @@
                     <MenuFlyout>
                         <controls:MenuFlyoutItemEx Text="Draw Inc" IconBackground="{StaticResource ViewerFlyoutMenuRedBrush}" Tag="&#xE104;" Style="{StaticResource MenuFlyoutItemStyle}"/>
                         <controls:MenuFlyoutItemEx Text="Edit" Description="Edit your image" IconBackground="{StaticResource ViewerFlyoutMenuBlueBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
-                        <controls:MenuFlyoutItemEx Text="Print" IconBackground="{StaticResource ViewerFlyoutMenuPurpleBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
+                        <controls:MenuFlyoutItemEx Text="FileInfo" IconBackground="{StaticResource ViewerFlyoutMenuPurpleBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}" Command="{x:Bind ViewModel.FileInfoCommnad}"/>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
                 

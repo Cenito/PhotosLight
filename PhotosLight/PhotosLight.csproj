@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AttachedProperties\ScrollViewerAttachedProperties.cs" />
+    <Compile Include="Controls\BindableFlyout.cs" />
     <Compile Include="Controls\MenuFlyoutItemEx.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertBoolConverter.cs" />

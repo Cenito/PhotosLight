@@ -5,6 +5,7 @@
     xmlns:local="using:PhotosLight"    
     xmlns:controls="using:PhotosLight.Controls"
     xmlns:converter="using:PhotosLight.Converters"
+    xmlns:attachedProperties="using:PhotosLight.AttachedProperties"
     RequestedTheme="Dark">
 
     <Application.Resources>
@@ -47,13 +48,19 @@
                              HorizontalScrollBarVisibility="Auto"
                              VerticalScrollBarVisibility="Auto"
                              MinZoomFactor="1" 
+                             attachedProperties:ScrollViewerAttachedProperties.ZoomLevel="{Binding ZoomFactor, Mode=TwoWay}"
                              ZoomMode="Enabled">
                         <Image  Source="{Binding Source}" Stretch="None"
                                 MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
                                 MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                    </ScrollViewer>
+                                RenderTransformOrigin="0.5, 0.5"
+                                VerticalAlignment="Center">
+                            <Image.RenderTransform>
+                                     <RotateTransform  CenterX="0.5" CenterY="0.5" Angle="{Binding Angle}"/>
+                            </Image.RenderTransform>
+                      </Image>
+                </ScrollViewer>
                 </Grid>
             </DataTemplate>
 
