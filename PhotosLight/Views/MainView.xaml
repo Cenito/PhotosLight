@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+       
     </Page.Resources>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -31,7 +31,7 @@
             </VisualState>
                 <VisualState x:Name="ChromeOff">
                     <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind ViewModel.IsChromeOff, Mode=OneWay}"/>
+                        <StateTrigger IsActive="{x:Bind ViewModel.IsChromeOn, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"/>
                     </VisualState.StateTriggers>
                     <Storyboard>
                         <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="commandBar" To="0" Duration="0:0:0.2"/>
@@ -79,7 +79,7 @@
             <AppBarButton Icon="Zoom" Label="Zoom" Command="{x:Bind ViewModel.ZoomCommnad}" Visibility="{x:Bind ViewModel.SelectedItem.IsZoomSupported, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                 <AppBarButton.Flyout>
                     <Flyout>
-                        <Slider MinWidth="150"></Slider>
+                        <Slider StepFrequency="0.1" Minimum="1" Maximum="5" Value="{x:Bind ViewModel.SelectedItem.ZoomFactor, Mode=TwoWay}" MinWidth="150"></Slider>
                     </Flyout>
                    
                 </AppBarButton.Flyout>
@@ -90,7 +90,7 @@
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <controls:MenuFlyoutItemEx Text="Draw Inc" IconBackground="{StaticResource ViewerFlyoutMenuRedBrush}" Tag="&#xE104;" Style="{StaticResource MenuFlyoutItemStyle}"/>
-                        <controls:MenuFlyoutItemEx Text="Edit" IconBackground="{StaticResource ViewerFlyoutMenuBlueBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
+                        <controls:MenuFlyoutItemEx Text="Edit" Description="Edit your image" IconBackground="{StaticResource ViewerFlyoutMenuBlueBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
                         <controls:MenuFlyoutItemEx Text="Print" IconBackground="{StaticResource ViewerFlyoutMenuPurpleBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
                     </MenuFlyout>
                 </AppBarButton.Flyout>

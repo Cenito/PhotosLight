@@ -97,13 +97,16 @@
     </Compile>
     <Compile Include="Controls\MenuFlyoutItemEx.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InvertBoolConverter.cs" />
     <Compile Include="Converters\StringNullOrEmptyVisibillityConverter.cs" />
     <Compile Include="DataModel\ImageViewerItem.cs" />
     <Compile Include="DataModel\VideoViewerItem.cs" />
     <Compile Include="DataModel\ViewerItemBase.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IShareService.cs" />
     <Compile Include="Interfaces\IThumbnailService.cs" />
     <Compile Include="Interfaces\IViewerItem.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="ViewerItemDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

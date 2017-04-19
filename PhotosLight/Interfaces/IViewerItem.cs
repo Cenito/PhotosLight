@@ -12,5 +12,6 @@ namespace PhotosLight.Interfaces
         Uri Source { get; set; }
         bool IsRotateSupported { get; }
         bool IsZoomSupported { get; }
+        double ZoomFactor { get; set; }
     }
 }

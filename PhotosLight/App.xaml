@@ -29,22 +29,34 @@
                     <SolidColorBrush x:Key="SubtitleBrush" Color="{StaticResource SystemBaseMediumColor}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-            
+
             <converter:StringNullOrEmptyVisibillityConverter x:Key="StringNullOrEmptyVisibillityConverter" />
-            
+            <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converter:InvertBoolConverter x:Key="InvertBoolConverter" />
+
             <DataTemplate x:Key="ImageFilmStripItemDataTemplate">
                 <Grid>
                     <Image  Height="65" Width="68"  Stretch="UniformToFill" Source="ms-appx:///Assets/filmstrip.png"/>
                     <Image  Height="46" Width="62" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding Source}" />
                 </Grid>
             </DataTemplate>
-            
+
             <DataTemplate x:Key="ImageItemDataTemplate" >
                 <Grid>
-                    <Image  Source="{Binding Source}" Stretch="UniformToFill"/>
+                    <ScrollViewer Name="ScrollViewerMain"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Auto"
+                             MinZoomFactor="1" 
+                             ZoomMode="Enabled">
+                        <Image  Source="{Binding Source}" Stretch="None"
+                                MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
+                                MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                    </ScrollViewer>
                 </Grid>
             </DataTemplate>
-            
+
             <DataTemplate x:Key="VideoItemDataTemplate">
                 <Grid>
                     <MediaElement AreTransportControlsEnabled="True"  Source="{Binding Source}" Stretch="UniformToFill"/>
@@ -58,7 +70,7 @@
             <ItemsPanelTemplate x:Key="ItemsPanelTemplate">
                 <ItemsStackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
-            
+
             <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>

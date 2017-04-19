@@ -16,6 +16,7 @@ namespace PhotosLight.ViewModels
     {
         private readonly IThumbnailService _thumbnailService;
         private readonly IShareService _shareService;
+        private readonly IDialogService _dialogService;
         private IViewerItem _selectedItem;
         private object _selectedObject;
         private bool _isChromeOn;
@@ -26,13 +27,13 @@ namespace PhotosLight.ViewModels
         public DelegateCommand FullscreenCommnad { get; private set; }
         public DelegateCommand LoadContentCommnad { get; private set; }
         public ObservableCollection<IViewerItem> Thumbnails { get { return _thumbnailService.Thumbnails; } }
-        public bool IsChromeOff { get { return !IsChromeOn; } }
         public bool IsFullScreen { get { return ApplicationView.GetForCurrentView().IsFullScreenMode; } }
 
-        public MainViewModel(IThumbnailService thumbnailService, IShareService shareService)
+        public MainViewModel(IThumbnailService thumbnailService, IShareService shareService, IDialogService dialogService)
         {
             _thumbnailService = thumbnailService;
             _shareService = shareService;
+            _dialogService = dialogService;
             SelectedItem = Thumbnails.FirstOrDefault();
             IsChromeOn = true;
 
@@ -42,18 +43,15 @@ namespace PhotosLight.ViewModels
                 ToggleFullScreenMode();
                 OnPropertyChanged(() => IsFullScreen);
             });
-
+          
+            RotateCommnad = new DelegateCommand(async () => await _dialogService.ShowDialogAsync("Not implemented yet!"));
+            DeleteCommnad = new DelegateCommand(async () => await _dialogService.ShowDialogAsync("Not implemented yet!"));
             LoadContentCommnad = new DelegateCommand(() => _thumbnailService.SelectFolder());
-
         }
         public bool IsChromeOn
         {
             get { return _isChromeOn; }
-            set
-            {
-                SetProperty(ref _isChromeOn, value);
-                OnPropertyChanged(() => IsChromeOff);
-            }
+            set { SetProperty(ref _isChromeOn, value); }
         }
         public object SelectedObject
         {
@@ -68,10 +66,10 @@ namespace PhotosLight.ViewModels
         {
             get { return _selectedItem; }
             set { SetProperty(ref _selectedItem, value); }
-        }   
+        }
         public void OnViewTapped(object sender, RoutedEventArgs e)
         {
-            if (e.OriginalSource.GetType() == typeof(Image)) 
+            if (e.OriginalSource.GetType() == typeof(Image))
             {
                 ToogleChrome();
             }

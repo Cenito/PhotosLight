@@ -27,7 +27,7 @@ namespace PhotosLight.Views
         public MainViewModel ViewModel { get; private set; }
         public MainView()
         {
-            ViewModel = new MainViewModel(new ThumbnailService(), new ShareService());
+            ViewModel = new MainViewModel(new ThumbnailService(), new ShareService(), new DialogService());
 
             this.InitializeComponent();
         }

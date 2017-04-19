@@ -9,9 +9,11 @@ namespace PhotosLight.DataModel
 {
     public class ImageViewerItem : ViewerItemBase
     {
-        public ImageViewerItem(string title, string picture): 
+        public ImageViewerItem(string title, string picture) :
             base(title, picture)
-        { }
-       
+        {
+            ZoomFactor = 1.0;
+        }
+
     }
 }
