@@ -11,8 +11,6 @@ namespace PhotosLight.DataModel
 {
     public class ImageViewerItem : ViewerItemBase
     {
-        private StorageFile file;
-
         public ImageViewerItem(StorageFile file) : 
             base(file?.Name)
         {

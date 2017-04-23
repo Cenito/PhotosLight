@@ -8,6 +8,10 @@ using System.Collections.ObjectModel;
 using PhotosLight.DataModel;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using Windows.Storage.Search;
+using System.IO;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
 
 namespace PhotosLight.Services
 {
@@ -35,6 +39,7 @@ namespace PhotosLight.Services
         public async void SelectFolder()
         {
             var folderPicker = new FolderPicker();
+            folderPicker.ViewMode = PickerViewMode.Thumbnail;
             folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
             folderPicker.FileTypeFilter.Add(".jpg");
             folderPicker.FileTypeFilter.Add(".jpeg");
@@ -46,10 +51,46 @@ namespace PhotosLight.Services
             {
                 Windows.Storage.AccessCache.StorageApplicationPermissions.
                 FutureAccessList.AddOrReplace("PickedFolderToken", folder);
-                //TODO Load content
+                LoadContent(folder);
             }
         }
 
-       
+        public void LoadContent(StorageFolder folder)
+        {
+            Thumbnails.Clear();
+            List<string> fileTypeFilter = new List<string>();
+            fileTypeFilter.Add(".jpg");
+            fileTypeFilter.Add(".jpeg");
+            fileTypeFilter.Add(".png");
+            fileTypeFilter.Add(".bmp");
+            QueryOptions queryOptions = new QueryOptions(CommonFileQuery.OrderBySearchRank, fileTypeFilter);
+
+            Task.Run(async () =>
+            {
+                StorageFileQueryResult queryResult = folder.CreateFileQueryWithOptions(queryOptions);
+                var files = await queryResult.GetFilesAsync();
+                foreach (var file in files)
+                {
+                    if (IsImageFile(file))
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                          {
+                              Thumbnails.Add(new ImageViewerItem(file));
+                          });
+                    }
+                }
+            });
+        }
+
+        private bool IsImageFile(StorageFile file)
+        {
+            var extension = Path.GetExtension(file.Path);
+            return string.Compare(extension, ".jpg", true) == 0 ||
+                string.Compare(extension, ".jpeg", true) == 0 ||
+                string.Compare(extension, ".png", true) == 0 ||
+                string.Compare(extension, ".bmp", true) == 0;
+        }
+
+
     }
 }
