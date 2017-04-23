@@ -11,7 +11,7 @@
        
     </Page.Resources>
 
-    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Tapped="{x:Bind ViewModel.OnViewTapped}">
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ChromeStateGroup">             
                  <VisualState x:Name="ChromeOn">
@@ -62,7 +62,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <FlipView x:Name="FlipView"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
+        <FlipView x:Name="FlipView" Tapped="{x:Bind ViewModel.OnViewTapped}"  HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedObject, Mode=TwoWay}" VerticalContentAlignment="Stretch" ItemTemplateSelector="{StaticResource ViewerItemDataTemplateSelector}" Style="{StaticResource FlipViewStyle1}" Grid.RowSpan="2">
            
         </FlipView>
         <Button x:Name="FullScreenButton"  HorizontalAlignment="Right"  Command="{x:Bind ViewModel.FullscreenCommnad}" VerticalAlignment="Bottom" Grid.Row="1">
@@ -73,16 +73,19 @@
             
             <CommandBar.Content>
                 <Grid VerticalAlignment="Center">
-                    <TextBlock x:Name="TitleTextBlock" Text="{x:Bind ViewModel.SelectedItem.Title, Mode=OneWay}" Margin="8,0,0,10" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                    <AppBarButton Icon="Folder" Label="" Command="{x:Bind ViewModel.LoadContentCommnad}"/>
+                    <TextBlock x:Name="TitleTextBlock" Text="{x:Bind ViewModel.SelectedItem.Title, Mode=OneWay}"  VerticalAlignment="Center" Margin="0,0,0,10">
                         <TextBlock.ContextFlyout >
                     <controls:BindableFlyout IsOpen="{x:Bind ViewModel.IsFileInfoOpen, Mode=TwoWay}"
                        Parent="{Binding ElementName=TitleTextBlock}">
-                        <StackPanel>
-                            <TextBlock Text="FileInfo Flyout!" Margin="10" />                           
+                        <StackPanel >                                   
+                          <TextBlock Text="FileInfo Flyout!" Margin="10" />                           
                         </StackPanel>
                     </controls:BindableFlyout>
                 </TextBlock.ContextFlyout>
                     </TextBlock>
+                    </StackPanel>
                 </Grid>
             </CommandBar.Content>
             <controls:CollapsibleToolBar.MiddleContent>
@@ -109,8 +112,7 @@
                 </AppBarButton.Flyout>
                 
             </AppBarButton>
-            <AppBarButton Icon="ReShare" Command="{x:Bind ViewModel.ShareCommnad}"  Label="Share"/>
-            <AppBarButton Icon="Folder" Label="Folder" Command="{x:Bind ViewModel.LoadContentCommnad}"/>
+            <AppBarButton Icon="ReShare" Command="{x:Bind ViewModel.ShareCommnad}"  Label="Share"/>           
         </controls:CollapsibleToolBar>
     </Grid>
 </Page>

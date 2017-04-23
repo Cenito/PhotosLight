@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace PhotosLight.DataModel
 {
@@ -15,12 +16,20 @@ namespace PhotosLight.DataModel
         private double _angle;
         public string Title { get; set; }
         public Uri Source { get; set; }
+
+        public BitmapImage ImageSource { get; set; }
+
         public virtual bool IsRotateSupported { get { return true; } }
         public virtual bool IsZoomSupported { get { return true; } }
+        public ViewerItemBase(string title)
+        {
+            Title = title;            
+        }
         public ViewerItemBase(string title, string sourceName)
         {
             Title = title;
             Source = new Uri(_baseUri, sourceName);
+            ImageSource = new BitmapImage(Source);
         }
         public double ZoomFactor
         {
