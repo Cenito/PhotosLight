@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace PhotosLight.ViewModels
 {
@@ -20,9 +21,14 @@ namespace PhotosLight.ViewModels
         private readonly IDialogService _dialogService;
         private IViewerItem _selectedItem;
         private object _selectedObject;
+        private bool _IsSlideShowRunning;
+        private BitmapImage _currentSlideShowImage;
+        private DispatcherTimer _slideShowDispatcherTimer;
+        private int _currentSlideShowImageIndex;
         private bool _isChromeOn;
         private double _zoomFactor;
         private bool _isFileInfoOpen;
+        public DelegateCommand StartSlideShowCommnad { get; private set; }
         public DelegateCommand ShareCommnad { get; private set; }
         public DelegateCommand FileInfoCommnad { get; private set; }
         public DelegateCommand ZoomCommnad { get; private set; }
@@ -41,8 +47,14 @@ namespace PhotosLight.ViewModels
             SelectedItem = Thumbnails.FirstOrDefault();
             IsChromeOn = true;
             _zoomFactor = 1;
+            _slideShowDispatcherTimer = new DispatcherTimer();
+            _slideShowDispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            _slideShowDispatcherTimer.Tick += OnSlideShowTimerTick;
 
+            DeleteCommnad = new DelegateCommand(async () => await _dialogService.ShowDialogAsync("Not implemented yet!"));
+            LoadContentCommnad = new DelegateCommand(() => _thumbnailService.SelectFolder());
             ShareCommnad = new DelegateCommand(() => _shareService.ShareContent(SelectedItem?.Title, "Share an Image from Photos", ((IViewerItem)SelectedItem).Source));
+
             FullscreenCommnad = new DelegateCommand(() =>
             {
                 ToggleFullScreenMode();
@@ -61,14 +73,61 @@ namespace PhotosLight.ViewModels
 
                 SelectedItem.Angle = SelectedItem.Angle + 90;
             });
-            DeleteCommnad = new DelegateCommand(async () => await _dialogService.ShowDialogAsync("Not implemented yet!"));
-            LoadContentCommnad = new DelegateCommand(() => _thumbnailService.SelectFolder());
+           
+            StartSlideShowCommnad = new DelegateCommand(() =>
+            {
+                IsSlideShowRunning = true;
+                _currentSlideShowImageIndex = 0;
+                ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+                CurrentSlideShowImage = Thumbnails.FirstOrDefault()?.ImageSource;                
+                _slideShowDispatcherTimer.Start();
+            });
+
+            Window.Current.CoreWindow.KeyDown += (sender, arg) =>
+            {
+                if (arg.VirtualKey == Windows.System.VirtualKey.Escape && IsSlideShowRunning)
+                {
+                    IsSlideShowRunning = false;
+                    _slideShowDispatcherTimer.Stop();
+                    var view = ApplicationView.GetForCurrentView();
+                    if (view.IsFullScreenMode)
+                    {
+                        view.ExitFullScreenMode();                        
+                    }
+                }
+            };
         }
+
+        private void OnSlideShowTimerTick(object sender, object e)
+        {
+            if (Thumbnails.Count-1 > _currentSlideShowImageIndex)
+            {
+                _currentSlideShowImageIndex++;
+                CurrentSlideShowImage = Thumbnails[_currentSlideShowImageIndex].ImageSource;               
+            }
+            else
+            {
+                _slideShowDispatcherTimer.Stop();
+            }
+        }
+
         public bool IsChromeOn
         {
             get { return _isChromeOn && ZoomFactor == 1; }
             set { SetProperty(ref _isChromeOn, value); }
         }
+
+        public bool IsSlideShowRunning
+        {
+            get { return _IsSlideShowRunning; }
+            set { SetProperty(ref _IsSlideShowRunning, value); }
+        }
+        public BitmapImage CurrentSlideShowImage
+        {
+            get { return _currentSlideShowImage; }
+            set { SetProperty(ref _currentSlideShowImage, value); }
+        }
+
         public bool IsFileInfoOpen
         {
             get { return _isFileInfoOpen; }
@@ -133,6 +192,7 @@ namespace PhotosLight.ViewModels
         {
             IsChromeOn = !IsChromeOn;
         }
+
         private void ToggleFullScreenMode()
         {
             var view = ApplicationView.GetForCurrentView();

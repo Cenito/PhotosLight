@@ -52,6 +52,7 @@
                              attachedProperties:ScrollViewerAttachedProperties.ZoomLevel="{Binding ZoomFactor, Mode=TwoWay}"
                              ZoomMode="Enabled">
                         <Grid>
+                           
                         <Image  Source="{Binding ImageSource}" Stretch="Uniform"
                                 MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
                                 MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
@@ -61,8 +62,8 @@
                             <Image.RenderTransform>
                                      <RotateTransform  CenterX="0.5" CenterY="0.5" Angle="{Binding Angle}"/>
                             </Image.RenderTransform>
-                      </Image>                      
-                       </Grid>
+                      </Image>                            
+                        </Grid>
                     </ScrollViewer>
                 </Grid>
             </DataTemplate>
