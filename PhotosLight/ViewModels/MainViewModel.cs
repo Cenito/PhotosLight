@@ -92,7 +92,8 @@ namespace PhotosLight.ViewModels
                     var view = ApplicationView.GetForCurrentView();
                     if (view.IsFullScreenMode)
                     {
-                        view.ExitFullScreenMode();                        
+                        view.ExitFullScreenMode();
+                        
                     }
                 }
             };

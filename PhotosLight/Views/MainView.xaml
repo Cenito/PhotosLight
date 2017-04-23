@@ -105,7 +105,7 @@
             <AppBarButton Icon="Edit" Label="Edit Create" >
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <controls:MenuFlyoutItemEx Text="Slide Show" IconBackground="{StaticResource ViewerFlyoutMenuRedBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}" Command="{x:Bind ViewModel.StartSlideShowCommnad}"/>
+                        <controls:MenuFlyoutItemEx Text="Slide Show" IconBackground="{StaticResource ViewerFlyoutMenuRedBrush}" Tag="&#xE102;" Style="{StaticResource MenuFlyoutItemStyle}" Command="{x:Bind ViewModel.StartSlideShowCommnad}"/>
                         <controls:MenuFlyoutItemEx Text="Edit" Description="Edit your image" IconBackground="{StaticResource ViewerFlyoutMenuBlueBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}"/>
                         <controls:MenuFlyoutItemEx Text="FileInfo" IconBackground="{StaticResource ViewerFlyoutMenuPurpleBrush}" Tag="&#xE1D9;" Style="{StaticResource MenuFlyoutItemStyle}" Command="{x:Bind ViewModel.FileInfoCommnad}"/>
                     </MenuFlyout>

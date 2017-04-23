@@ -23,7 +23,8 @@ namespace PhotosLight.DataModel
         public virtual bool IsZoomSupported { get { return true; } }
         public ViewerItemBase(string title)
         {
-            Title = title;            
+            Title = title;
+            ZoomFactor = 1;
         }
         public ViewerItemBase(string title, string sourceName)
         {

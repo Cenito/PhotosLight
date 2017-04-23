@@ -53,7 +53,7 @@
                              ZoomMode="Enabled">
                         <Grid>
                            
-                        <Image  Source="{Binding ImageSource}" Stretch="Uniform"
+                        <Image  Source="{Binding ImageSource}" Stretch="UniformToFill" 
                                 MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
                                 MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
                                 HorizontalAlignment="Center"

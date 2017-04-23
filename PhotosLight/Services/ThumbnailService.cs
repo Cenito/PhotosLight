@@ -76,7 +76,8 @@ namespace PhotosLight.Services
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                           {
                               Thumbnails.Add(new ImageViewerItem(file));
-                          });
+                              
+                          });                   
                     }
                 }
             });
