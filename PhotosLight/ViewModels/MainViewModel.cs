@@ -79,7 +79,8 @@ namespace PhotosLight.ViewModels
                 IsSlideShowRunning = true;
                 _currentSlideShowImageIndex = 0;
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                CurrentSlideShowImage = Thumbnails.FirstOrDefault()?.ImageSource;                
+                CurrentSlideShowImage = Thumbnails.FirstOrDefault()?.ImageSource;
+                Window.Current.CoreWindow.PointerCursor = null;
                 _slideShowDispatcherTimer.Start();
             });
 
@@ -93,7 +94,8 @@ namespace PhotosLight.ViewModels
                     if (view.IsFullScreenMode)
                     {
                         view.ExitFullScreenMode();
-                        
+                        Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
+
                     }
                 }
             };

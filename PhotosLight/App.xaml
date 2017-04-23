@@ -13,6 +13,9 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="TitleBarColor" >
+                        #FF333333
+                    </Color>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuRedBrush" Color="#E74856"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuBlueBrush" Color="#0099BC"/>
                     <SolidColorBrush x:Key="ViewerFlyoutMenuPurpleBrush" Color="#6B69D6"/>

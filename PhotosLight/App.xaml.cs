@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PhotosLight.Views;
+using Windows.UI.ViewManagement;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 
 namespace PhotosLight
 {
@@ -64,6 +67,19 @@ namespace PhotosLight
             {
                 if (rootFrame.Content == null)
                 {
+                    if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+                    {
+                        var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                        if (titleBar != null)
+                        {
+                            var titleBarColor = (Color)Application.Current.Resources["TitleBarColor"];
+                            titleBar.ButtonBackgroundColor = titleBarColor;
+                            titleBar.ButtonForegroundColor = Colors.White;
+                            titleBar.BackgroundColor = titleBarColor;
+                            titleBar.ForegroundColor = Colors.White;
+                        }
+                    }
+
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
