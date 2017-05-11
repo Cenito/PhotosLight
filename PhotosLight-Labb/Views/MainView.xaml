@@ -26,6 +26,11 @@
                     <MediaElement AreTransportControlsEnabled="True" Source="{Binding Source}" Stretch="UniformToFill"/>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="imageFilmStripTemplate">
+                <Grid>
+                    <Image Source="{Binding Source}" Stretch="UniformToFill"/>
+                </Grid>
+            </DataTemplate>
 
         </ResourceDictionary>
     </Page.Resources>
@@ -40,6 +45,20 @@
             </FlipView.ItemTemplateSelector>
             
         </FlipView>
+        <ListView ItemsSource="{x:Bind ViewModel.Thumbnails}" SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
+                  ItemTemplate="{StaticResource imageFilmStripTemplate}"
+                  ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.VerticalScrollMode="Disabled"
+                  ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                  Height="100"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  Margin="20">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel></ListView>
     </Grid>
     
     
