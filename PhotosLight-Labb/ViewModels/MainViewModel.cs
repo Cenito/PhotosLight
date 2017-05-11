@@ -2,6 +2,7 @@
 using PhotosLight.MVVM;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.ViewManagement;
 
 namespace PhotosLight.ViewModels
 {
@@ -16,6 +17,32 @@ namespace PhotosLight.ViewModels
             _thumbnailService = thumbnailService;
             _shareService = shareService;
             SelectedItem = thumbnailService.Thumbnails.FirstOrDefault();
+            FullScreenCommand = new DelegateCommand(() =>
+            {
+                ToggleFullScreenMode();
+                OnPropertyChanged(() => IsFullScreen);
+            });
+        }
+
+        public DelegateCommand FullScreenCommand { get; private set; }
+
+        public bool IsFullScreen { get => ApplicationView.GetForCurrentView().IsFullScreenMode; }
+
+        private void ToggleFullScreenMode()
+        {
+            var view = ApplicationView.GetForCurrentView();
+            if (view.IsFullScreenMode)
+            {
+                view.ExitFullScreenMode();
+                ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+            }
+            else
+            {
+                if (view.TryEnterFullScreenMode())
+                {
+                    ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+                }
+            }
         }
 
         private IViewerItem _selectedItem;
@@ -26,6 +53,14 @@ namespace PhotosLight.ViewModels
             set {
                 SetProperty(ref _selectedItem, value);
             }
+        }
+
+        private bool _isChromeOff;
+
+        public bool IsChromeOff
+        {
+            get { return _isChromeOff; }
+            set { SetProperty(ref _isChromeOff, value); }
         }
     }
 }
