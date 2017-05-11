@@ -102,6 +102,7 @@
     <Compile Include="Interfaces\IThumbnailService.cs" />
     <Compile Include="Interfaces\IViewerItem.cs" />
     <Compile Include="Services\ShareService.cs" />
+    <Compile Include="ViewerTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
